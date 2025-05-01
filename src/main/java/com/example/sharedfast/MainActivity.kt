@@ -2,8 +2,8 @@ package com.example.sharedfast
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 
@@ -14,10 +14,10 @@ class MainActivity : ComponentActivity() {
 
         setContentView(R.layout.activity_splash_screen)
 
-        val myButton: Button = findViewById(R.id.intentButton)
-        myButton.setOnClickListener({
+        Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, HomePage::class.java))
-        })
+            finish()
+        }, 3000)
 
     }
 }

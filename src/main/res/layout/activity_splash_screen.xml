@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background">
 
-    <!--<ImageView
+    <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:contentDescription="Splash Screen Image"
@@ -37,15 +37,6 @@
         android:text="a notes sharing app"
         android:textSize="20sp"
         tools:ignore="HardcodedText"
-        android:textColor="@color/cardview_light_background"/>-->
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Activity"
-        android:id="@+id/intentButton"
-        tools:ignore="HardcodedText"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:textColor="@color/cardview_light_background"/>
 
 </RelativeLayout>
