@@ -1,19 +1,20 @@
 package com.example.sharedfast
 
+import FolderAdapter
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.window.Dialog
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginLeft
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class HomePage : AppCompatActivity() {
+
+    val folderNames: MutableList<String> = ArrayList()
+    lateinit var folderRecyclerView: RecyclerView
+    lateinit var folderAdapter: FolderAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,7 @@ class HomePage : AppCompatActivity() {
         val addNewFolderButton:Button = findViewById(R.id.addFolderButton)
         addNewFolderButton.setOnClickListener{
 
-            val editText: EditText = EditText(this)
+            val editText = EditText(this)
             editText.hint = "Folder Name"
 
             AlertDialog.Builder(this)
@@ -34,7 +35,8 @@ class HomePage : AppCompatActivity() {
                 .setCancelable(false)
                 .setPositiveButton("Create") { dialog, which ->
                     val folderName = editText.text.toString().trim()
-                    Toast.makeText(this, "Folder name: $folderName", Toast.LENGTH_SHORT).show()
+                    folderAdapter.addItem(folderName)
+
                 }
                 .setNegativeButton("Cancel") { dialog, which ->
                     dialog.cancel()
@@ -43,5 +45,14 @@ class HomePage : AppCompatActivity() {
 
         }
 
+        folderRecyclerView = findViewById<RecyclerView>(R.id.foldersView)
+        folderNames.add("First")
+        folderNames.add("Second")
+        folderNames.add("Third")
+        folderNames.add("Forth")
+        folderNames.add("Five")
+        folderRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        folderAdapter = FolderAdapter(folderNames)
+        folderRecyclerView.adapter = folderAdapter
     }
 }
