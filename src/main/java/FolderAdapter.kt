@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sharedfast.R
 
-class FolderAdapter (private val list: MutableList<String>): RecyclerView.Adapter<FolderAdapter.MyViewHolder>() {
+class FolderAdapter (private val list: MutableList<String>, private val onItemCLick: (String) -> Unit): RecyclerView.Adapter<FolderAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.folder, parent, false)
         return MyViewHolder(view)
@@ -13,6 +13,9 @@ class FolderAdapter (private val list: MutableList<String>): RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.folderName.text = list[position]
+        holder.itemView.setOnClickListener {
+            onItemCLick(list[position])
+        }
     }
 
     override fun getItemCount(): Int {
