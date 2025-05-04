@@ -3,6 +3,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sharedfast.R
 
@@ -13,10 +14,21 @@ class NoteAdapter (private val list: MutableList<Note>): RecyclerView.Adapter<No
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.noteSource.setImageBitmap(list[position].source)
-        holder.noteTitle.text = list[position].name
-        holder.noteDate.text = list[position].date
-        holder.noteTime.text = list[position].time
+        val note = list[position]
+        val uri = note.source.toUri()
+
+        if (uri != null) {
+            try {
+                holder.noteSource.setImageURI(uri)
+            } catch (e: Exception) {
+                holder.noteSource.setImageResource(R.drawable.black)
+            }
+        } else {
+            holder.noteSource.setImageResource(R.drawable.black)
+        }
+        holder.noteTitle.text = note.name
+        holder.noteDate.text = note.date
+        holder.noteTime.text = note.time
     }
 
     override fun getItemCount(): Int {
@@ -26,6 +38,10 @@ class NoteAdapter (private val list: MutableList<Note>): RecyclerView.Adapter<No
     fun addItem(item: Note) {
         list.add(item)
         notifyItemInserted(list.size - 1)
+    }
+
+    fun getItems(): List<Note>{
+        return list
     }
 
     class MyViewHolder : RecyclerView.ViewHolder {

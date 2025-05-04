@@ -76,6 +76,17 @@
             android:textColor="#C5CAE9"
             tools:ignore="ButtonStyle,HardcodedText,VisualLintButtonSize" />
 
+        <Button
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.5"
+            android:text="Share"
+            android:textColor="#C5CAE9"
+            tools:ignore="ButtonStyle,HardcodedText,VisualLintButtonSize" />
+
     </LinearLayout>
 
 </RelativeLayout>

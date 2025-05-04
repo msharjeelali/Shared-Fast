@@ -1,8 +1,6 @@
-import android.graphics.Bitmap
-
 data class Note(
     val name: String,
-    val source: Bitmap,
+    val source: String,
     val date: String,
     val time: String
     )

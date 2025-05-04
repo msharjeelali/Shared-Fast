@@ -5,16 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.edit
 
 class HomePage : AppCompatActivity() {
 
-    val foldersName: MutableList<String> = ArrayList()
+    var foldersName: MutableList<String> = ArrayList()
     lateinit var folderRecyclerView: RecyclerView
     lateinit var folderAdapter: FolderAdapter
 
@@ -23,6 +23,10 @@ class HomePage : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_home_page)
+
+        val sharedPref = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val savedFolders = sharedPref.getStringSet("folders", emptySet())
+        foldersName = savedFolders?.toMutableList() ?: mutableListOf()
 
         val addNewFolderButton:Button = findViewById(R.id.add_folder_button)
         addNewFolderButton.setOnClickListener{
@@ -44,20 +48,23 @@ class HomePage : AppCompatActivity() {
                     dialog.cancel()
                 }
                 .show()
-
         }
 
         folderRecyclerView = findViewById<RecyclerView>(R.id.folders_view)
-        foldersName.add("First")
-        foldersName.add("Second")
-        foldersName.add("Third")
-        foldersName.add("Forth")
-        foldersName.add("Five")
         folderRecyclerView.layoutManager = GridLayoutManager(this, 2)
         folderAdapter = FolderAdapter(foldersName) { folderName ->
             startActivity(Intent(this, FolderPage::class.java).putExtra("folderName", folderName))
         }
 
         folderRecyclerView.adapter = folderAdapter
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val sharedPref = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        sharedPref.edit {
+            val folderSet = foldersName.toSet()
+            putStringSet("folders", folderSet)
+        }
     }
 }
